@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario | MATCH EQ - IR MAKER</title>
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-panel: #1e1e1e;
+            --accent: #00838f;
+            --text-main: #e0e0e0;
+            --text-muted: #aaaaaa;
+            --border: #333333;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: var(--bg-panel);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+        }
+        h1 { color: #fff; margin-top: 0; }
+        h2 { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-top: 30px; }
+        h3 { color: #fff; margin-bottom: 8px; }
+        p { color: var(--text-muted); }
+        .credit { font-style: italic; color: #888; font-size: 0.9em; margin-top: -15px; margin-bottom: 30px; }
+        
+        .box {
+            background-color: #252525;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .box p { margin: 0; color: #ccc; }
+        
+        ul { color: var(--text-muted); padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        strong { color: #fff; }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.85em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>MATCH EQ - IR MAKER</h1>
+    <div class="credit">by Blackchorima</div>
+
+    <h2>¿Qué es esta aplicación?</h2>
+    <p><strong>MATCH EQ - IR MAKER</strong> es una herramienta avanzada de procesamiento de señal (DSP) diseñada para clonar y transferir la huella acústica de cualquier guitarra o bajo. Su función principal es analizar la diferencia espectral entre dos pistas de audio (A y B) y generar un archivo de <strong>Impulse Response (IR)</strong> instantáneo.</p>
+    
+    <p>Al cargar este IR en tu pedalera física o plugin de simulador favorito, tu sonido original se moldeará matemáticamente para sonar idéntico al de tu pista de referencia elegida.</p>
+
+    <h2>Casos de Uso Principales</h2>
+    
+    <h3>1. Copiar el tono de estudio de una canción comercial</h3>
+    <p>Si tienes un fragmento de guitarra aislada (stem) de tu disco favorito, ese será tu <strong>Audio de Referencia (A)</strong>. Luego, grabas un fragmento tocando el mismo riff usando tu amplificador (físico o emulado) y eso será tu <strong>Audio Objetivo (B)</strong>. El programa extraerá la "magia" del estudio para que tu ampli suene igual que el del disco.</p>
+
+    <h3>2. "Robar" o capturar Impulsos Comerciales / Altavoces Reales</h3>
+    <p>Si tienes una cadena de efectos en tu ordenador (por ejemplo, en un DAW) que tiene un bloque de altavoz/IR que te encanta, pero quieres meter ese sonido en un aparato externo:</p>
+    <ul>
+        <li>Exporta el audio de tu guitarra <strong>CON el IR/Cab activado (A)</strong>.</li>
+        <li>Exporta el mismo audio exacto <strong>SIN el IR/Cab activado (B)</strong>.</li>
+        <li>El software generará un archivo WAV que replica al 100% esa pantalla para que puedas usarla en hardware.</li>
+    </ul>
+
+    <h2>Compatibilidad de Hardware</h2>
+    <p>El algoritmo está milimétricamente calibrado (con alineamiento de fase acústica MPT) para compensar los problemas de volumen inherentes a los *cargadores de impulsos*. Los IR exportados (WAV 24-bit / 48kHz) son *plug & play* y ganancia-unitarios con sistemas como:</p>
+    <ul>
+        <li><strong>Line 6 Helix</strong> (Floor, LT, Stomp, Native)</li>
+        <li><strong>Neural DSP Quad Cortex</strong> & Plugins</li>
+        <li><strong>IK Multimedia TONEX</strong> / Amplitube</li>
+        <li><strong>Kemper Profiler</strong> y <strong>M-Wave / Cuvebabes</strong></li>
+        <li><strong>Cualquier DAW</strong> y cargador de IR estándar (Nadir, Fenrir, etc.)</li>
+    </ul>
+
+    <h2>Guía de Uso Paso a Paso</h2>
+    
+    <ol>
+        <li><strong>Prepara tus audios:</strong>Asegúrate de tener tus dos pistas de audio exportadas en formato WAV. Tienen que estar grabadas de la manera más similar posible (¡usa preferiblemente DIs reamplificados para el máximo rigor!).</li>
+        <li><strong>Cargar Pista A (Referencia):</strong> Haz clic en el primer botón y selecciona el audio final que tiene el "sonido que quieres alcanzar".</li>
+        <li><strong>Cargar Pista B (Objetivo):</strong> Haz clic en el segundo botón y selecciona tu propio audio (preferiblemente grabado con un amplificador muy limpio o de características del previo similares al de referencia, pero sin emulaciones complejas de cabinas).</li>
+        <li><strong>Analizar:</strong> Pulsa el botón "Analizar y Generar Eq Match". El motor de fase cruzará ambos espectros y te mostrará una gráfica triple en la pantalla derecha: la línea Cian es tu meta, la línea Gris es tu audio base, y la línea Morada es la curva correctiva que se inyectará en el IR.</li>
+        <li><strong>Exportar:</strong> Pulsa "Exportar a WAV" y guarda tu archivo final. Cárgalo en el bloque de IR de tu equipo... ¡y disfruta de tu nuevo tono clonado!</li>
+    </ol>
+    
+    <div class="box">
+        <p>💡 <strong>Pro Tip:</strong> Para conseguir un clonado perfecto (99% de exactitud), intenta que el tipo de distorsión base, la guitarra y el estilo de púa sean lo más cercanos posibles entre tus interpretaciones. ¡El EQ Match puede clonar el tono del altavoz y micrófonos, pero no la saturación (gain) de las válvulas!</p>
+    </div>
+
+    <div class="footer">
+        MATCH EQ - IR MAKER | DSP Engine built with Go & Wails | © 2026 Blackchorima
+    </div>
+</div>
+
+</body>
+</html>
