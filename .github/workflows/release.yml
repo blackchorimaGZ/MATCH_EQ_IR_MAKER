@@ -1,0 +1,58 @@
+name: Build All Platforms
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: '1.22' }
+      - run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+      - working-directory: ./ir_maker
+        run: |
+          wails build -platform darwin/universal -clean
+      - working-directory: ./ir_maker/build/bin
+        run: zip -r MATCH_EQ_IR_MAKER_Mac.zip "ir_maker.app"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Mac-App-Universal
+          path: ./ir_maker/build/bin/MATCH_EQ_IR_MAKER_Mac.zip
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: '1.22' }
+      - run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+      - working-directory: ./ir_maker
+        run: wails build -platform windows/amd64 -clean
+      - working-directory: ./ir_maker/build/bin
+        run: Rename-Item "ir_maker.exe" "MATCH_EQ_IR_MAKER_Windows.exe"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Windows-App
+          path: ./ir_maker/build/bin/MATCH_EQ_IR_MAKER_Windows.exe
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: '1.22' }
+      - name: Install Linux Dependencies
+        run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev
+      - run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+      - working-directory: ./ir_maker
+        run: wails build -platform linux/amd64 -clean
+      - working-directory: ./ir_maker/build/bin
+        run: mv ir_maker MATCH_EQ_IR_MAKER_Linux
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Linux-App
+          path: ./ir_maker/build/bin/MATCH_EQ_IR_MAKER_Linux
