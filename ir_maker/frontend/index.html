@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Antigravity Match EQ GO</title>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="header">
+            <h2>MATCH EQ - IR MAKER</h2>
+            <p class="subtitle">by Blackchorima</p>
+        </div>
+        <div class="main-content">
+            <div class="controls-panel">
+                <div class="card">
+                    <button class="btn btn-primary" id="btnRef">Cargar Tono Referencia (A)</button>
+                    <p class="file-label" id="lblRef">Ningún archivo cargado</p>
+                </div>
+                <div class="card">
+                    <button class="btn btn-primary" id="btnTgt">Cargar Tono Objetivo (B)</button>
+                    <p class="file-label" id="lblTgt">Ningún archivo cargado</p>
+                </div>
+                
+                <hr>
+
+                <div class="actions">
+                    <button class="btn btn-action" id="btnAnalyze">Analizar y Generar Eq Match</button>
+                    <button class="btn btn-export" id="btnExport" disabled>Exportar a WAV</button>
+                </div>
+
+                <div class="status-panel">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="status-text" id="statusText">Esperando audios...</p>
+                </div>
+            </div>
+            
+            <div class="chart-panel">
+                <canvas id="spectrumChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

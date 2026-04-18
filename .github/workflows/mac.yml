@@ -1,0 +1,39 @@
+name: Build Mac App
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          
+      - name: Install Wails
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+        
+      - name: Build Mac Universal App
+        working-directory: ./ir_maker
+        run: |
+          wails build -platform darwin/universal -clean
+          
+      - name: Create DMG (Apple Disk Image)
+        working-directory: ./ir_maker/build/bin
+        run: |
+          # The app is located at ir_maker.app
+          # We'll zip it instead of a complex DMG to ensure it works properly without singing errors
+          zip -r MATCH_EQ_IR_MAKER_Mac.zip "ir_maker.app"
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mac-App-Universal
+          path: ./ir_maker/build/bin/MATCH_EQ_IR_MAKER_Mac.zip
